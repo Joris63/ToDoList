@@ -54,25 +54,28 @@ const useGlobalState = () => React.useContext(GlobalState);
 
 // Create an example component which both renders and modifies the GlobalState
 function ToDoList() {
-  const { toDo } = useGlobalState();
   let newDate = new Date()
   let date = newDate.getDate();
   var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   let monthIndex = newDate.getMonth() + 1;
   let year = newDate.getFullYear();
 
+  const { toDo } = useGlobalState();
+
   // Create a function which mutates GlobalState
   function AddToDo() {
     GlobalState.set({
-      toDo: toDo.push({ id: toDo.length, title: "New task...", completed: false }),
+      toDo: toDo.concat([{ id: toDo.length, title: "New task...", completed: false }])
     });
   }
 
+  /*
   function EditToDo(index, title) {
     GlobalState.set({
       toDo: toDo[index] = { id: toDo[index].id, title: title, completed: toDo[index].completed },
     });
   }
+  */
 
   return (
     <div className="main">
@@ -88,17 +91,17 @@ function ToDoList() {
       </header>
       <ul>
         {toDo.map((todo, index) => (
-            <li key={index}>
-              <p>{todo.title}</p>
-              <label className="checkbox-wrapper">
-                <input type="checkbox"></input>
-                <span className="checkmark"></span>
-              </label>
-            </li>
-          ))}
+          <li key={index}>
+            <p>{todo.title}</p>
+            <label className="checkbox-wrapper">
+              <input type="checkbox"></input>
+              <span className="checkmark"></span>
+            </label>
+          </li>
+        ))}
       </ul>
       <footer>
-        <button>
+        <button onClick={AddToDo}>
           <i className="fa fa-plus"></i>
         </button>
       </footer>
