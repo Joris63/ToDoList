@@ -69,13 +69,30 @@ function ToDoList() {
     });
   }
 
-  /*
+
   function EditToDo(index, title) {
+    toDo[index] = { id: toDo[index].id, title: title, completed: toDo[index].completed };
+
     GlobalState.set({
-      toDo: toDo[index] = { id: toDo[index].id, title: title, completed: toDo[index].completed },
+      toDo: toDo
     });
   }
-  */
+
+  /*
+  function EditTitle() {
+    let p = element.target.nextSibling;
+    console.log(element)
+    //p.contentEditable = true;
+  }*/
+
+  function ChangeToDoStatus(index) {
+    toDo[index] = { id: toDo[index].id, title: toDo[index].title, completed: document.getElementById("checkbox" + index).checked };
+
+    GlobalState.set({
+      toDo: toDo
+    });
+  }
+
 
   return (
     <div className="main">
@@ -92,9 +109,10 @@ function ToDoList() {
       <ul>
         {toDo.map((todo, index) => (
           <li key={index}>
-            <p>{todo.title}</p>
-            <label className="checkbox-wrapper">
-              <input type="checkbox"></input>
+            <button onClick={() => EditToDo(index, "Something else")}><i className="fa fa-pencil-square-o"></i></button>
+            <p className={todo.completed ? "crossed-out" : ""} id={"title" + index}>{todo.title}</p>
+            <label className="checkbox-wrapper" >
+              <input id={"checkbox" + index} type="checkbox" onClick={() => ChangeToDoStatus(index)}></input>
               <span className="checkmark"></span>
             </label>
           </li>
