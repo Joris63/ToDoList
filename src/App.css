@@ -98,7 +98,7 @@ li {
   margin: 2em;
 }
 
-li button {
+.edit-button {
   background: none;
   border: none;
   border-radius: 50%;
@@ -110,9 +110,10 @@ li button {
 
 li i:before {
   font-size: 1.5em;
+  color: #2f3542;
 }
 
-li button:hover {
+.edit-button:hover {
   background-color: #ced6e0;
   cursor: pointer;
 }
@@ -123,9 +124,57 @@ li p {
   color: #2f3542;
 }
 
+li input {
+  margin: 0;
+  border: none;
+  border-bottom: 1px solid #2f3542;
+  font-weight: 500;
+  color: #2f3542;
+  width: 80%;
+  padding: 8px;
+}
+
+li input:focus {
+  outline: none;
+}
+
 .crossed-out {
   text-decoration: line-through;
   color: #a4b0be;
+}
+li div {
+  display: flex;
+  margin-right: 7px;
+  margin-left: 15px;
+}
+
+.confirm-button {
+  background-color: #7bed9f;
+  border: none;
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+  text-align: center;
+}
+
+.confirm-button:hover {
+  background-color: #2ed573;
+  cursor: pointer;
+}
+
+.cancel-button {
+  background-color: #ff6b81;
+  border: none;
+  border-radius: 50%;
+  margin-left: 5px;
+  height: 40px;
+  width: 40px;
+  text-align: center;
+}
+
+.cancel-button:hover {
+  background-color: #ff4757;
+  cursor: pointer;
 }
 
 /*

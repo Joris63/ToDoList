@@ -1,9 +1,9 @@
 import './App.css';
-import React from 'react';
+import React, { useState } from 'react';
 
 
 const initialGlobalState = {
-  toDo: [{ id: 0, title: "New task...", completed: false }],
+  toDo: [],
 };
 
 // Create a Context for the (global) State
@@ -54,45 +54,45 @@ const useGlobalState = () => React.useContext(GlobalState);
 
 // Create an example component which both renders and modifies the GlobalState
 function ToDoList() {
+  const { toDo } = useGlobalState();
+
   let newDate = new Date()
   let date = newDate.getDate();
   var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   let monthIndex = newDate.getMonth() + 1;
   let year = newDate.getFullYear();
 
-  const { toDo } = useGlobalState();
 
   // Create a function which mutates GlobalState
   function AddToDo() {
     GlobalState.set({
-      toDo: toDo.concat([{ id: toDo.length, title: "New task...", completed: false }])
+      toDo: toDo.concat([{ id: toDo.length, title: "New task...", editable: false, completed: false }])
     });
   }
 
-
-  function EditToDo(index, title) {
-    toDo[index] = { id: toDo[index].id, title: title, completed: toDo[index].completed };
+  function EditTitle(index, state) {
+    toDo[index] = { id: toDo[index].id, title: toDo[index].title, editable: state, completed: toDo[index].completed };
 
     GlobalState.set({
       toDo: toDo
     });
   }
 
-  /*
-  function EditTitle() {
-    let p = element.target.nextSibling;
-    console.log(element)
-    //p.contentEditable = true;
-  }*/
+  function EditToDo(index) {
+    toDo[index] = { id: toDo[index].id, title: document.getElementById("input" + index).value, editable: toDo[index].editable, completed: toDo[index].completed };
+    GlobalState.set({
+      toDo: toDo
+    });
+    EditTitle(index, false);
+  }
 
   function ChangeToDoStatus(index) {
-    toDo[index] = { id: toDo[index].id, title: toDo[index].title, completed: document.getElementById("checkbox" + index).checked };
+    toDo[index] = { id: toDo[index].id, title: toDo[index].title, editable: toDo[index].editable, completed: document.getElementById("checkbox" + index).checked };
 
     GlobalState.set({
       toDo: toDo
     });
   }
-
 
   return (
     <div className="main">
@@ -109,12 +109,27 @@ function ToDoList() {
       <ul>
         {toDo.map((todo, index) => (
           <li key={index}>
-            <button onClick={() => EditToDo(index, "Something else")}><i className="fa fa-pencil-square-o"></i></button>
-            <p className={todo.completed ? "crossed-out" : ""} id={"title" + index}>{todo.title}</p>
-            <label className="checkbox-wrapper" >
-              <input id={"checkbox" + index} type="checkbox" onClick={() => ChangeToDoStatus(index)}></input>
-              <span className="checkmark"></span>
-            </label>
+            {!todo.editable ? (
+              <button className="edit-button"><i className="fa fa-pencil-square-o" onClick={() => EditTitle(index, true)}></i></button>
+            ) : null}
+
+            {todo.editable ? (
+              <input id={"input" + index} maxLength={25} type='text' ></input>
+            ) : (
+              <p className={todo.completed ? "crossed-out" : ""} id={"title" + index} > {todo.title}</p>
+            )}
+
+            {todo.editable ? (
+              <div>
+                <button className="confirm-button" onClick={() => EditToDo(index)}><i className="fa fa-check"></i></button>
+                <button className="cancel-button" onClick={() => EditTitle(index, false)}><i className="fa fa-times"></i></button>
+              </div>
+            ) : (
+              <label className="checkbox-wrapper"  >
+                <input checked={todo.completed} id={"checkbox" + index} type="checkbox" onClick={() => ChangeToDoStatus(index)}></input>
+                <span className="checkmark"></span>
+              </label>
+            )}
           </li>
         ))}
       </ul>
@@ -123,7 +138,7 @@ function ToDoList() {
           <i className="fa fa-plus"></i>
         </button>
       </footer>
-    </div>
+    </div >
   );
 }
 
