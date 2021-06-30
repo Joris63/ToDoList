@@ -1,10 +1,9 @@
 import './App.css';
 import React from 'react';
-import ToDoList from './components/ToDoList/ToDoList';
-import AddToDo from './components/AddToDo/AddToDo';
+
 
 const initialGlobalState = {
-  count: 0,
+  toDo: [{ id: 0, title: "New task...", completed: false }],
 };
 
 // Create a Context for the (global) State
@@ -54,47 +53,68 @@ class Global extends React.Component {
 const useGlobalState = () => React.useContext(GlobalState);
 
 // Create an example component which both renders and modifies the GlobalState
-function SomeComponent() {
-  const { count } = useGlobalState();
-
-  // Create a function which mutates GlobalState
-  function incrementCount() {
-    GlobalState.set({
-      count: count + 1,
-    });
-  }
-
-  return <div onClick={incrementCount}>{count}</div>;
-}
-
-export default function App() {
+function ToDoList() {
+  const { toDo } = useGlobalState();
   let newDate = new Date()
   let date = newDate.getDate();
   var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   let monthIndex = newDate.getMonth() + 1;
   let year = newDate.getFullYear();
 
+  // Create a function which mutates GlobalState
+  function AddToDo() {
+    GlobalState.set({
+      toDo: toDo.push({ id: toDo.length, title: "New task...", completed: false }),
+    });
+  }
 
-  // Note: within the Root function we can return any Component (not just SomeComponent, but also a Router for instance)
+  function EditToDo(index, title) {
+    GlobalState.set({
+      toDo: toDo[index] = { id: toDo[index].id, title: title, completed: toDo[index].completed },
+    });
+  }
+
   return (
-    <div className="container">
-      <div className="main">
-        <header>
-          <h1 className="title">ToDo List</h1>
-          <div className="date">
-            <h1 id="date">{date}</h1>
-            <div>
-              <p id="month">{months[monthIndex]}</p>
-              <p id="year">{year}</p>
-            </div>
+    <div className="main">
+      <header>
+        <h1 className="title">ToDo List</h1>
+        <div className="date">
+          <h1 id="date">{date}</h1>
+          <div>
+            <p id="month">{months[monthIndex]}</p>
+            <p id="year">{year}</p>
           </div>
-        </header>
-        <ToDoList></ToDoList>
-        <AddToDo></AddToDo>
-      </div>
+        </div>
+      </header>
+      <ul>
+        {toDo.map((todo, index) => (
+            <li key={index}>
+              <p>{todo.title}</p>
+              <label className="checkbox-wrapper">
+                <input type="checkbox"></input>
+                <span className="checkmark"></span>
+              </label>
+            </li>
+          ))}
+      </ul>
+      <footer>
+        <button>
+          <i className="fa fa-plus"></i>
+        </button>
+      </footer>
     </div>
   );
 }
 
-// Expose the GlobalState object to the window (allowing GlobalState.set({ count: 'new' }) from anywhere in the code (even your console))
-window.GlobalState = GlobalState;
+
+export default function App() {
+
+
+  // Note: within the Root function we can return any Component (not just SomeComponent, but also a Router for instance)
+  return (
+    <div className="container">
+      <Global Root={() => <ToDoList />} />
+    </div>
+  );
+}
+
