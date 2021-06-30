@@ -1,0 +1,26 @@
+footer {
+  position: relative;
+  width: 90%;
+  margin-top: 3em;
+}
+
+footer button {
+  position: absolute;
+  bottom: -60px;
+  left: 35%;
+  border-radius: 50%;
+  width: 7em;
+  height: 7em;
+  border: none;
+  background-color: #7bed9f;
+}
+
+footer button:hover {
+  background-color: #2ed573;
+  cursor: pointer;
+}
+
+button i:before {
+  font-size: 3em;
+  color: #2f3542;
+}

@@ -1,5 +1,7 @@
 import './App.css';
 import React from 'react';
+import ToDoList from './components/ToDoList/ToDoList';
+import AddToDo from './components/AddToDo/AddToDo';
 
 const initialGlobalState = {
   count: 0,
@@ -87,77 +89,8 @@ export default function App() {
             </div>
           </div>
         </header>
-        <ul>
-          <li>
-            <p>Buy new sweathshirt</p>
-            <label class="checkbox-wrapper">
-              <input type="checkbox"></input>
-              <span class="checkmark"></span>
-            </label>
-          </li>
-          <li>
-            <p>Buy new sweathshirt</p>
-            <label class="checkbox-wrapper">
-              <input type="checkbox"></input>
-              <span class="checkmark"></span>
-            </label>
-          </li>
-          <li>
-            <p>Buy new sweathshirt</p>
-            <label class="checkbox-wrapper">
-              <input type="checkbox"></input>
-              <span class="checkmark"></span>
-            </label>
-          </li>
-          <li>
-            <p>Buy new sweathshirt</p>
-            <label class="checkbox-wrapper">
-              <input type="checkbox"></input>
-              <span class="checkmark"></span>
-            </label>
-          </li>
-          <li>
-            <p>Buy new sweathshirt</p>
-            <label class="checkbox-wrapper">
-              <input type="checkbox"></input>
-              <span class="checkmark"></span>
-            </label>
-          </li>
-          <li>
-            <p>Buy new sweathshirt</p>
-            <label class="checkbox-wrapper">
-              <input type="checkbox"></input>
-              <span class="checkmark"></span>
-            </label>
-          </li>
-          <li>
-            <p>Buy new sweathshirt</p>
-            <label class="checkbox-wrapper">
-              <input type="checkbox"></input>
-              <span class="checkmark"></span>
-            </label>
-          </li>
-          <li>
-            <p>Buy new sweathshirt</p>
-            <label class="checkbox-wrapper">
-              <input type="checkbox"></input>
-              <span class="checkmark"></span>
-            </label>
-          </li>
-          <li>
-            <p>Buy new sweathshirt</p>
-            <label class="checkbox-wrapper">
-              <input type="checkbox"></input>
-              <span class="checkmark"></span>
-            </label>
-          </li>
-        </ul>
-        <footer>
-          <button>
-            <i class="fa fa-plus"></i>
-          </button>
-        </footer>
-
+        <ToDoList></ToDoList>
+        <AddToDo></AddToDo>
       </div>
     </div>
   );
