@@ -121,7 +121,7 @@ function ToDoList() {
         <div className="date">
           <h1 id="date">{date}</h1>
           <div>
-            <p id="month">{months[monthIndex]}</p>
+            <p id="month">{months[monthIndex - 1]}</p>
             <p id="year">{year}</p>
           </div>
         </div>
