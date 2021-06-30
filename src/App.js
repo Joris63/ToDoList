@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useState } from 'react';
+import React from 'react';
 
 
 const initialGlobalState = {
@@ -94,6 +94,14 @@ function ToDoList() {
     });
   }
 
+  function DeleteToDo(index) {
+    toDo.splice(index, 1);
+
+    GlobalState.set({
+      toDo: toDo
+    });
+  }
+
   return (
     <div className="main">
       <header>
@@ -130,6 +138,7 @@ function ToDoList() {
                 <span className="checkmark"></span>
               </label>
             )}
+            <button className="delete" onClick={() => DeleteToDo(index)}><i class="fa fa-trash"></i></button>
           </li>
         ))}
       </ul>

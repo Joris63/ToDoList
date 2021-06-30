@@ -93,9 +93,39 @@ ul {
 }
 
 li {
+  position: relative;
+  background-color: white;
   display: flex;
   align-items: center;
-  margin: 2em;
+  margin-left: 1em;
+  margin-right: 2em;
+  padding: 0.5em;
+}
+
+li:hover,
+li:hover input {
+  background-color: #dfe4ea;
+}
+
+li:hover .delete {
+  visibility: visible;
+}
+
+.delete {
+  visibility: hidden;
+  position: absolute;
+  top: -15px;
+  right: -15px;
+  width: 35px;
+  height: 35px;
+  background-color: #ff6b81;
+  border: none;
+  border-radius: 50%;
+}
+
+.delete:hover {
+  background-color: #ff4757;
+  cursor: pointer;
 }
 
 .edit-button {
@@ -134,17 +164,13 @@ li input {
   padding: 8px;
 }
 
-li input:focus {
-  outline: none;
-}
-
 .crossed-out {
   text-decoration: line-through;
   color: #a4b0be;
 }
 li div {
   display: flex;
-  margin-right: 7px;
+  margin-right: 15px;
   margin-left: 15px;
 }
 
@@ -187,6 +213,7 @@ Checkbox
   margin-left: auto;
   position: relative;
   padding-left: 35px;
+  margin-right: 15px;
   margin-bottom: 25px;
   cursor: pointer;
   font-size: 22px;
