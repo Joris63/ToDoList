@@ -15,7 +15,7 @@ export default class ToDo {
         this.editable = state;
     }
 
-    ChnagStatus(status) {
+    ChangeStatus(status) {
         this.completed = status;
     }
 }

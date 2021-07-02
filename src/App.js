@@ -91,7 +91,7 @@ function ToDoList() {
 
   // Edit the title of the actual item
   function EditToDo(index) {
-    toDo[index].EditTitle(document.getElementById("input" + index).value);
+    toDo[index].ChangeTitle(document.getElementById("input" + index).value);
 
     GlobalState.set({
       toDo: toDo
