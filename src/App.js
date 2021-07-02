@@ -82,7 +82,7 @@ function ToDoList() {
 
   // Toggle the input to edit the title
   function EditTitle(index, state) {
-    toDo[index] = new ToDo(toDo[index].id, toDo[index].title, state, toDo[index].completed);
+    toDo[index].MakeEditable(state);
 
     GlobalState.set({
       toDo: toDo
@@ -91,7 +91,8 @@ function ToDoList() {
 
   // Edit the title of the actual item
   function EditToDo(index) {
-    toDo[index] = new ToDo(toDo[index].id, document.getElementById("input" + index).value, toDo[index].editable, toDo[index].completed);
+    toDo[index].EditTitle(document.getElementById("input" + index).value);
+
     GlobalState.set({
       toDo: toDo
     });
@@ -100,7 +101,7 @@ function ToDoList() {
 
   // Edit the status of the to do item
   function ChangeToDoStatus(index) {
-    toDo[index] = new ToDo(toDo[index].id, toDo[index].title, toDo[index].editable, document.getElementById("checkbox" + index).checked);
+    toDo[index].ChangeStatus(document.getElementById("checkbox" + index).checked);
 
     GlobalState.set({
       toDo: toDo
@@ -178,7 +179,6 @@ function ToDoList() {
 
 
 export default function App() {
-
 
   // Note: within the Root function we can return any Component (not just SomeComponent, but also a Router for instance)
   return (

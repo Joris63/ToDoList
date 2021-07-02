@@ -7,4 +7,15 @@ export default class ToDo {
         this.completed = completed;
     }
 
+    ChangeTitle(title) {
+        this.title = title;
+    }
+
+    MakeEditable(state) {
+        this.editable = state;
+    }
+
+    ChnagStatus(status) {
+        this.completed = status;
+    }
 }
