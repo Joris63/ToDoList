@@ -1,5 +1,6 @@
 import './App.css';
 import React from 'react';
+import ToDo from './models/ToDo'
 
 // Initial toDo List
 const initialGlobalState = {
@@ -69,17 +70,19 @@ function ToDoList() {
   All methods concerning todo list
   ===============
   */
-  
+
   // Add a to do item
   function AddToDo() {
+    toDo.push(new ToDo(toDo.length, "New task...", false, false));
+
     GlobalState.set({
-      toDo: toDo.concat([{ id: toDo.length, title: "New task...", editable: false, completed: false }])
+      toDo: toDo
     });
   }
 
   // Toggle the input to edit the title
   function EditTitle(index, state) {
-    toDo[index] = { id: toDo[index].id, title: toDo[index].title, editable: state, completed: toDo[index].completed };
+    toDo[index] = new ToDo(toDo[index].id, toDo[index].title, state, toDo[index].completed);
 
     GlobalState.set({
       toDo: toDo
@@ -88,7 +91,7 @@ function ToDoList() {
 
   // Edit the title of the actual item
   function EditToDo(index) {
-    toDo[index] = { id: toDo[index].id, title: document.getElementById("input" + index).value, editable: toDo[index].editable, completed: toDo[index].completed };
+    toDo[index] = new ToDo(toDo[index].id, document.getElementById("input" + index).value, toDo[index].editable, toDo[index].completed);
     GlobalState.set({
       toDo: toDo
     });
@@ -97,7 +100,7 @@ function ToDoList() {
 
   // Edit the status of the to do item
   function ChangeToDoStatus(index) {
-    toDo[index] = { id: toDo[index].id, title: toDo[index].title, editable: toDo[index].editable, completed: document.getElementById("checkbox" + index).checked };
+    toDo[index] = new ToDo(toDo[index].id, toDo[index].title, toDo[index].editable, document.getElementById("checkbox" + index).checked);
 
     GlobalState.set({
       toDo: toDo
