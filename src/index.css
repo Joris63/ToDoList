@@ -9,6 +9,11 @@
   outline: none;
 }
 
+button i:before {
+  font-size: 3em;
+  color: #2f3542;
+}
+
 body {
   margin: 0;
   padding: 0;
