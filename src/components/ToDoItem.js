@@ -157,8 +157,3 @@ function ToDoItem(props) {
 }
 
 export default ToDoItem;
-
-/*
-    <button className="delete" onClick={() => DeleteToDo()}><i className="fa fa-trash"></i></button>
-</li >
-*/
