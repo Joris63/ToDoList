@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles, createTheme, ListItem, ListItemIcon, Checkbox, ListItemText, TextField, ListItemSecondaryAction, IconButton, ThemeProvider } from '@material-ui/core';
+import { makeStyles, createTheme, ListItem, ListItemIcon, Checkbox, ListItemText, TextField, ListItemSecondaryAction, IconButton, ThemeProvider, Box } from '@material-ui/core';
 import EditSharpIcon from '@material-ui/icons/EditSharp';
 import ClearSharpIcon from '@material-ui/icons/ClearSharp';
 import CheckSharpIcon from '@material-ui/icons/CheckSharp';
@@ -31,15 +31,32 @@ const useStyles = makeStyles({
     },
     delete: {
         visibility: 'hidden',
+        position: 'relative',
+        background: 'linear-gradient(to right, #eb3349, #f45c43)',
+        zIndex: 1,
+        '&::before': {
+            position: 'absolute',
+            content: '""',
+            borderRadius: '50%',
+            top: 0,
+            right: 0,
+            bottom: 0,
+            left: 0,
+            backgroundImage: 'linear-gradient(to left, #eb3349, #f45c43)',
+            zIndex: -1,
+            transition: 'opacity 0.2s linear',
+            opacity: 0,
+        },
+
+        "&:hover::before": {
+            opacity: 1,
+        },
+    },
+    buttonRoot: {
         position: 'absolute',
         top: -25,
         right: -25,
-        borderRadius: '50%',
-        background: '#ff6b81',
-        '&:hover': {
-            background: '#ff4757',
-        }
-    },
+    }
 });
 
 function ToDoItem(props) {
@@ -130,9 +147,11 @@ function ToDoItem(props) {
 
 
             {/* The delete button shows up on hover over a todo item  */}
-            <IconButton className={classes.delete} onClick={() => DeleteToDo()} >
-                <DeleteForeverSharpIcon fontSize="small" />
-            </IconButton>
+            <Box className={classes.buttonRoot}>
+                <IconButton className={classes.delete} onClick={() => DeleteToDo()} >
+                    <DeleteForeverSharpIcon fontSize="small" />
+                </IconButton>
+            </Box>
 
             <ListItemSecondaryAction>
                 {/* Show the edit button if the to do is not editable */}
