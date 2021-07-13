@@ -6,7 +6,7 @@ function getItemsFromLocalStorage() {
         const list = [];
 
         const savedList = JSON.parse(localStorage.getItem('toDoList'));
-        savedList.map(item => list.push(new ToDo(item.id, item.title, item.editable, item.completed)));
+        savedList.map(item => list.push(new ToDo(list.length, item.title, item.editable, item.completed)));
 
         return list;
     }

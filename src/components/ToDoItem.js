@@ -84,7 +84,7 @@ function ToDoItem(props) {
 
     // Toggle the input to edit the title
     function EditTitle(state) {
-        props.toDo[props.todo.id].MakeEditable(state);
+        props.toDo[findIndexOfItem()].MakeEditable(state);
 
         props.GlobalState.set({
             toDo: props.toDo
@@ -94,7 +94,7 @@ function ToDoItem(props) {
 
     // Edit the title of the actual item
     function EditToDo() {
-        props.toDo[props.todo.id].ChangeTitle(document.getElementById("input" + props.todo.id).value);
+        props.toDo[findIndexOfItem()].ChangeTitle(document.getElementById("input" + props.todo.id).value);
 
         props.GlobalState.set({
             toDo: props.toDo
@@ -105,7 +105,7 @@ function ToDoItem(props) {
 
     // Edit the status of the to do item
     function ChangeToDoStatus() {
-        props.toDo[props.todo.id].ChangeStatus(document.getElementById("checkbox" + props.todo.id).checked);
+        props.toDo[findIndexOfItem()].ChangeStatus(document.getElementById("checkbox" + props.todo.id).checked);
 
         props.GlobalState.set({
             toDo: props.toDo
@@ -115,12 +115,20 @@ function ToDoItem(props) {
 
     // Delete the to do item
     function DeleteToDo() {
-        props.toDo.splice(props.todo.id, 1);
+        props.toDo.splice(findIndexOfItem(), 1);
 
         props.GlobalState.set({
             toDo: props.toDo
         });
         localStorage.setItem('toDoList', JSON.stringify(props.toDo));
+    }
+
+    function findIndexOfItem() {
+        for (var i = props.toDo.length - 1; i >= 0; --i) {
+            if (props.toDo[i].id === props.todo.id) {
+                return i;
+            }
+        }
     }
 
     return (

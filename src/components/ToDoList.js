@@ -3,7 +3,7 @@ import { GlobalState, useGlobalState } from '../GlobalState'
 import ToDoItem from "./ToDoItem";
 import AddToDo from "./AddToDo";
 import { makeStyles } from '@material-ui/core/styles';
-import { Grid, Paper, Typography, List } from '@material-ui/core';
+import { Grid, Paper, Typography, List, Button } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
     main: {
@@ -29,6 +29,28 @@ const useStyles = makeStyles((theme) => ({
         fontWeigth: 400,
         color: '#747d8c',
     },
+    delete: {
+        position: 'relative',
+        background: 'linear-gradient(to right, #eb3349, #f45c43)',
+        zIndex: 1,
+        '&::before': {
+            position: 'absolute',
+            content: '""',
+            borderRadius: 4,
+            top: 0,
+            right: 0,
+            bottom: 0,
+            left: 0,
+            background: 'linear-gradient(to right, #f45c43, #eb3349)',
+            zIndex: -1,
+            transition: 'opacity 0.2s linear',
+            opacity: 0,
+        },
+
+        "&:hover::before": {
+            opacity: 1,
+        },
+    },
 }));
 
 
@@ -44,6 +66,12 @@ function ToDoList() {
     let monthIndex = newDate.getMonth();
     let year = newDate.getFullYear();
 
+    function ClearList() {
+        GlobalState.set({
+            toDo: []
+        });
+        localStorage.removeItem('toDoList');
+    }
 
     return (
         <Paper className={classes.main}>
@@ -83,10 +111,25 @@ function ToDoList() {
                     </List>
                 </Grid>
 
+                {/* The footer of the paper */}
+                {toDo.length > 0 ? (
+                    <Grid item style={{ marginBottom: 15 }}>
+                        <Grid container alignItems="center" justifyContent="space-between">
+                            <Grid item>
+                                <Typography variant="body1">You have {toDo.length} tasks pending</Typography>
+                            </Grid>
+                            <Grid item >
+                                <Button className={classes.delete} onClick={() => ClearList()}>Clear all</Button>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                ) : null}
+
                 {/* The Add ToDo Button */}
                 <Grid item style={{ position: 'relative' }}>
                     <AddToDo toDo={toDo} GlobalState={GlobalState} />
                 </Grid>
+
             </Grid>
         </Paper>
     );
