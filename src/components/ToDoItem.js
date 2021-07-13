@@ -88,6 +88,7 @@ function ToDoItem(props) {
 
     /* Edit the status of the to do item */
     function ChangeToDoStatus() {
+        console.log("Yes")
         props.toDo[findIndexOfItem()].ChangeStatus(!document.getElementById("checkbox" + props.todo.id).checked);
 
         props.GlobalState.set({
@@ -138,6 +139,7 @@ function ToDoItem(props) {
                             id={"checkbox" + props.todo.id}
                             tabIndex={-1}
                             disableRipple
+                            style={{ pointerEvents: 'none' }}
                         />
                     </ListItemIcon>
                 ) : null}

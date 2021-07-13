@@ -130,8 +130,13 @@ function ToDoList() {
                 {toDo.length > 0 ? (
                     <Grid item style={{ marginBottom: 15 }}>
                         <Grid container alignItems="center" justifyContent="space-between">
+
                             <Grid item>
-                                <Typography variant="body1">You have {GetNumberOfIncompleteItems()} tasks pending</Typography>
+                                {GetNumberOfIncompleteItems() > 0 ? (
+                                    <Typography variant="body1">You have {GetNumberOfIncompleteItems()} tasks pending</Typography>
+                                ) : (
+                                    <Typography variant="body1">All done for today 👍</Typography>
+                                )}
                             </Grid>
                             <Grid item >
                                 <Button className={classes.delete} onClick={() => ClearList()}>Clear all</Button>
