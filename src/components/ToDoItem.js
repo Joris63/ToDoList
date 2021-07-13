@@ -77,7 +77,7 @@ function ToDoItem(props) {
         props.GlobalState.set({
             toDo: props.toDo
         });
-        localStorage.setItem('toDoList', JSON.stringify(props.toDo));
+        SaveChangesToLocalStorage();
     }
 
     // Edit the title of the actual item
@@ -87,7 +87,7 @@ function ToDoItem(props) {
         props.GlobalState.set({
             toDo: props.toDo
         });
-        localStorage.setItem('toDoList', JSON.stringify(props.toDo));
+        SaveChangesToLocalStorage();
         EditTitle(false);
     }
 
@@ -98,7 +98,7 @@ function ToDoItem(props) {
         props.GlobalState.set({
             toDo: props.toDo
         });
-        localStorage.setItem('toDoList', JSON.stringify(props.toDo));
+        SaveChangesToLocalStorage();
     }
 
     // Delete the to do item
@@ -108,7 +108,7 @@ function ToDoItem(props) {
         props.GlobalState.set({
             toDo: props.toDo
         });
-        localStorage.setItem('toDoList', JSON.stringify(props.toDo));
+        SaveChangesToLocalStorage();
     }
 
     function findIndexOfItem() {
@@ -117,6 +117,16 @@ function ToDoItem(props) {
                 return i;
             }
         }
+    }
+
+    function SaveChangesToLocalStorage() {
+        var values = [];
+        var oneday = new Date();
+        oneday.setHours(oneday.getHours() + 24);
+        values.push(JSON.stringify(props.toDo));
+        values.push(oneday);
+
+        localStorage.setItem('toDoList', values.join(";"));
     }
 
     return (

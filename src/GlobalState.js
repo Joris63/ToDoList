@@ -4,9 +4,15 @@ import ToDo from './models/ToDo'
 function getItemsFromLocalStorage() {
     if (localStorage.getItem("toDoList") != null) {
         const list = [];
+        const localStorageItems = localStorage.getItem('toDoList').split(";");
 
-        const savedList = JSON.parse(localStorage.getItem('toDoList'));
-        savedList.map(item => list.push(new ToDo(list.length, item.title, item.editable, item.completed)));
+        console.log(localStorageItems[1] > new Date())
+        if (localStorageItems[1] > Date()) {
+            JSON.parse(localStorageItems[0]).map(item => list.push(new ToDo(list.length, item.title, item.editable, item.completed)));
+        }
+        else {
+            localStorage.removeItem('toDoList');
+        }
 
         return list;
     }

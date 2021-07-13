@@ -48,7 +48,18 @@ function AddToDo(props) {
         props.GlobalState.set({
             toDo: props.toDo
         });
-        localStorage.setItem('toDoList', JSON.stringify(props.toDo));
+        SaveChangesToLocalStorage();
+    }
+
+
+    function SaveChangesToLocalStorage() {
+        var values = [];
+        var oneday = new Date();
+        oneday.setHours(oneday.getHours() + 24);
+        values.push(JSON.stringify(props.toDo));
+        values.push(oneday);
+
+        localStorage.setItem('toDoList', values.join(";"));
     }
 
     return (
