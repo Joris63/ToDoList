@@ -1,8 +1,23 @@
 import React from 'react';
+import ToDo from './models/ToDo'
+
+function getItemsFromLocalStorage() {
+    if (localStorage.getItem("toDoList") != null) {
+        const list = [];
+
+        const savedList = JSON.parse(localStorage.getItem('toDoList'));
+        savedList.map(item => list.push(new ToDo(item.id, item.title, item.editable, item.completed)));
+
+        return list;
+    }
+    else {
+        return [];
+    }
+}
 
 // Initial toDo List
 const initialGlobalState = {
-    toDo: [],
+    toDo: getItemsFromLocalStorage(),
 };
 
 // Create a Context for the (global) State

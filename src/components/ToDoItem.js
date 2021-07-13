@@ -89,6 +89,7 @@ function ToDoItem(props) {
         props.GlobalState.set({
             toDo: props.toDo
         });
+        localStorage.setItem('toDoList', JSON.stringify(props.toDo));
     }
 
     // Edit the title of the actual item
@@ -98,6 +99,7 @@ function ToDoItem(props) {
         props.GlobalState.set({
             toDo: props.toDo
         });
+        localStorage.setItem('toDoList', JSON.stringify(props.toDo));
         EditTitle(false);
     }
 
@@ -108,6 +110,7 @@ function ToDoItem(props) {
         props.GlobalState.set({
             toDo: props.toDo
         });
+        localStorage.setItem('toDoList', JSON.stringify(props.toDo));
     }
 
     // Delete the to do item
@@ -117,6 +120,7 @@ function ToDoItem(props) {
         props.GlobalState.set({
             toDo: props.toDo
         });
+        localStorage.setItem('toDoList', JSON.stringify(props.toDo));
     }
 
     return (
@@ -144,7 +148,6 @@ function ToDoItem(props) {
                 <TextField id={"input" + props.todo.id} label="Title" defaultValue={props.todo.title} size="small" />
             )
             }
-
 
             {/* The delete button shows up on hover over a todo item  */}
             <Box className={classes.buttonRoot}>

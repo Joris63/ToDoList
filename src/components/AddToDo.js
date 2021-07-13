@@ -48,6 +48,7 @@ function AddToDo(props) {
         props.GlobalState.set({
             toDo: props.toDo
         });
+        localStorage.setItem('toDoList', JSON.stringify(props.toDo));
     }
 
     return (
