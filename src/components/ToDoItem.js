@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles, createTheme, ListItem, ListItemIcon, Checkbox, ListItemText, TextField, ListItemSecondaryAction, IconButton, ThemeProvider } from '@material-ui/core';
+import { makeStyles, withStyles, createTheme, ListItem, ListItemIcon, Checkbox, ListItemText, TextField, ListItemSecondaryAction, IconButton, ThemeProvider } from '@material-ui/core';
 import EditSharpIcon from '@material-ui/icons/EditSharp';
 import ClearSharpIcon from '@material-ui/icons/ClearSharp';
 import CheckSharpIcon from '@material-ui/icons/CheckSharp';
@@ -39,6 +39,12 @@ const useStyles = makeStyles({
         color: '#a4b0be',
     },
 });
+
+const ListItemWithWiderSecondaryAction = withStyles({
+    secondaryAction: {
+        paddingRight: 120
+    }
+})(ListItem);
 
 function ToDoItem(props) {
 
@@ -129,7 +135,7 @@ function ToDoItem(props) {
 
     return (
         <ThemeProvider theme={inputTheme}>
-            <ListItem dense button={!props.todo.editable} onClick={handleToggle(props.todo.id)}>
+            <ListItemWithWiderSecondaryAction dense button={!props.todo.editable} onClick={handleToggle(props.todo.id)}>
                 {!props.todo.editable ? (
                     <ListItemIcon>
                         <Checkbox
@@ -146,9 +152,9 @@ function ToDoItem(props) {
 
                 {/* Shows either the paragraph or the input depending on if it's editable */}
                 {!props.todo.editable ? (
-                    <ListItemText id={labelId} className={props.todo.completed ? classes.crossedOut : ""} primary={props.todo.title} />
+                    <ListItemText id={labelId} className={props.todo.completed ? classes.crossedOut : ""} multiline primary={props.todo.title} />
                 ) : (
-                    <TextField color="primary" id={"input" + props.todo.id} label="Title" defaultValue={props.todo.title} size="small" />
+                    <TextField style={{ flex: '1 1 auto' }} color="primary" id={"input" + props.todo.id} label="Title" multiline defaultValue={props.todo.title} size="small" />
                 )}
 
                 <ListItemSecondaryAction>
@@ -179,7 +185,7 @@ function ToDoItem(props) {
                         </ThemeProvider>
                     )}
                 </ListItemSecondaryAction>
-            </ListItem>
+            </ListItemWithWiderSecondaryAction>
         </ThemeProvider>
     );
 }
