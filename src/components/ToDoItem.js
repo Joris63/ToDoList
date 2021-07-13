@@ -25,22 +25,15 @@ const theme2 = createTheme({
 const inputTheme = createTheme({
     palette: {
         primary: {
-            main: '#2f3542',
+            main: green[500],
         },
+        secondary: {
+            main: '#2f3542',
+        }
     },
 });
 
 const useStyles = makeStyles({
-    item: {
-        paddingTop: 10,
-        paddingBottom: 10,
-        '&:hover': {
-            background: '#dfe4ea',
-            '& $delete': {
-                visibility: 'visible'
-            }
-        },
-    },
     crossedOut: {
         textDecoration: 'line-through',
         color: '#a4b0be',
@@ -56,18 +49,20 @@ function ToDoItem(props) {
 
     /* Edit the status of the to do item */
     const handleToggle = (value) => () => {
-        const currentIndex = checked.indexOf(value);
-        const newChecked = [...checked];
+        if (!props.todo.editable) {
+            const currentIndex = checked.indexOf(value);
+            const newChecked = [...checked];
 
-        if (currentIndex === -1) {
-            newChecked.push(value);
-        } else {
-            newChecked.splice(currentIndex, 1);
+            if (currentIndex === -1) {
+                newChecked.push(value);
+            } else {
+                newChecked.splice(currentIndex, 1);
+            }
+
+            ChangeToDoStatus();
+
+            setChecked(newChecked);
         }
-
-        ChangeToDoStatus();
-
-        setChecked(newChecked);
     };
 
     /* Toggle the input to edit the title */
@@ -93,7 +88,7 @@ function ToDoItem(props) {
 
     /* Edit the status of the to do item */
     function ChangeToDoStatus() {
-        props.toDo[findIndexOfItem()].ChangeStatus(document.getElementById("checkbox" + props.todo.id).checked);
+        props.toDo[findIndexOfItem()].ChangeStatus(!document.getElementById("checkbox" + props.todo.id).checked);
 
         props.GlobalState.set({
             toDo: props.toDo
@@ -133,32 +128,28 @@ function ToDoItem(props) {
 
     return (
         <ThemeProvider theme={inputTheme}>
-            <ListItem dense className={classes.item}>
+            <ListItem dense button={!props.todo.editable} onClick={handleToggle(props.todo.id)}>
                 {!props.todo.editable ? (
                     <ListItemIcon>
-                        <ThemeProvider theme={theme}>
-                            <Checkbox
-                                color="primary"
-                                edge="start"
-                                checked={props.todo.completed}
-                                id={"checkbox" + props.todo.id}
-                                tabIndex={-1}
-                                disableRipple
-                                onClick={handleToggle(props.todo.id)}
-                            />
-                        </ThemeProvider>
+                        <Checkbox
+                            color="primary"
+                            edge="start"
+                            checked={props.todo.completed}
+                            id={"checkbox" + props.todo.id}
+                            tabIndex={-1}
+                            disableRipple
+                        />
                     </ListItemIcon>
                 ) : null}
 
                 {/* Shows either the paragraph or the input depending on if it's editable */}
                 {!props.todo.editable ? (
-                    <ListItemText className={props.todo.completed ? classes.crossedOut : ""} id={labelId} primary={props.todo.title} />
+                    <ListItemText id={labelId} className={props.todo.completed ? classes.crossedOut : ""} primary={props.todo.title} />
                 ) : (
                     <TextField color="primary" id={"input" + props.todo.id} label="Title" defaultValue={props.todo.title} size="small" />
                 )}
 
                 <ListItemSecondaryAction>
-
                     {/* Show different buttons depending on if the to do is not editable */}
                     {!props.todo.editable ? (
                         <ThemeProvider theme={theme2}>
