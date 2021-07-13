@@ -66,6 +66,15 @@ function ToDoList() {
     let monthIndex = newDate.getMonth();
     let year = newDate.getFullYear();
 
+    function GetNumberOfIncompleteItems() {
+        var result = 0;
+        for (var i = 0; i < toDo.length; i++) {
+            if (!toDo[i].completed)
+                result++;
+        }
+        return result;
+    }
+
     function ClearList() {
         GlobalState.set({
             toDo: []
@@ -103,12 +112,16 @@ function ToDoList() {
                     </Grid>
                 </Grid>
                 {/* Render all the items using the .map method */}
-                <Grid item xs={12}>
-                    <List>
-                        {toDo.map((todo, index) => (
-                            <ToDoItem key={index} todo={todo} toDo={toDo} GlobalState={GlobalState} />
-                        ))}
-                    </List>
+                <Grid item style={{ paddingRight: 0, paddingLeft: 0 }} >
+                    {toDo.length > 0 ? (
+                        <List>
+                            {toDo.map((todo, index) => (
+                                <ToDoItem key={index} todo={todo} toDo={toDo} GlobalState={GlobalState} />
+                            ))}
+                        </List>
+                    ) : (
+                        <Typography style={{ marginBottom: 15, marginTop: 15 }} align="center">Nothing to do today 👌</Typography>
+                    )}
                 </Grid>
 
                 {/* The footer of the paper */}
@@ -116,7 +129,7 @@ function ToDoList() {
                     <Grid item style={{ marginBottom: 15 }}>
                         <Grid container alignItems="center" justifyContent="space-between">
                             <Grid item>
-                                <Typography variant="body1">You have {toDo.length} tasks pending</Typography>
+                                <Typography variant="body1">You have {GetNumberOfIncompleteItems()} tasks pending</Typography>
                             </Grid>
                             <Grid item >
                                 <Button className={classes.delete} onClick={() => ClearList()}>Clear all</Button>

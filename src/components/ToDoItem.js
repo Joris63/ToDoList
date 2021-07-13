@@ -1,15 +1,31 @@
 import React from 'react';
-import { makeStyles, createTheme, ListItem, ListItemIcon, Checkbox, ListItemText, TextField, ListItemSecondaryAction, IconButton, ThemeProvider, Box } from '@material-ui/core';
+import { makeStyles, createTheme, ListItem, ListItemIcon, Checkbox, ListItemText, TextField, ListItemSecondaryAction, IconButton, ThemeProvider } from '@material-ui/core';
 import EditSharpIcon from '@material-ui/icons/EditSharp';
 import ClearSharpIcon from '@material-ui/icons/ClearSharp';
 import CheckSharpIcon from '@material-ui/icons/CheckSharp';
 import DeleteForeverSharpIcon from '@material-ui/icons/DeleteForeverSharp';
-import { green } from '@material-ui/core/colors';
+import { green, orange } from '@material-ui/core/colors';
 
 const theme = createTheme({
     palette: {
         primary: {
             main: green[500],
+        },
+    },
+});
+
+const theme2 = createTheme({
+    palette: {
+        primary: {
+            main: orange[500],
+        },
+    },
+});
+
+const inputTheme = createTheme({
+    palette: {
+        primary: {
+            main: '#2f3542',
         },
     },
 });
@@ -29,34 +45,6 @@ const useStyles = makeStyles({
         textDecoration: 'line-through',
         color: '#a4b0be',
     },
-    delete: {
-        visibility: 'hidden',
-        position: 'relative',
-        background: 'linear-gradient(to right, #eb3349, #f45c43)',
-        zIndex: 1,
-        '&::before': {
-            position: 'absolute',
-            content: '""',
-            borderRadius: '50%',
-            top: 0,
-            right: 0,
-            bottom: 0,
-            left: 0,
-            backgroundImage: 'linear-gradient(to left, #eb3349, #f45c43)',
-            zIndex: -1,
-            transition: 'opacity 0.2s linear',
-            opacity: 0,
-        },
-
-        "&:hover::before": {
-            opacity: 1,
-        },
-    },
-    buttonRoot: {
-        position: 'absolute',
-        top: -25,
-        right: -25,
-    }
 });
 
 function ToDoItem(props) {
@@ -132,57 +120,62 @@ function ToDoItem(props) {
     }
 
     return (
-        <ListItem dense className={classes.item}>
-            {!props.todo.editable ? (
-                <ListItemIcon>
-                    <ThemeProvider theme={theme}>
-                        <Checkbox
-                            color="primary"
-                            edge="start"
-                            checked={props.todo.completed}
-                            id={"checkbox" + props.todo.id}
-                            tabIndex={-1}
-                            disableRipple
-                            onClick={handleToggle(props.todo.id)}
-                        />
-                    </ThemeProvider>
-                </ListItemIcon>
-            ) : null}
-
-            {/* Shows either the paragraph or the input depending on if it's editable */}
-            {!props.todo.editable ? (
-                <ListItemText className={props.todo.completed ? classes.crossedOut : ""} id={labelId} primary={props.todo.title} />
-            ) : (
-                <TextField id={"input" + props.todo.id} label="Title" defaultValue={props.todo.title} size="small" />
-            )
-            }
-
-            {/* The delete button shows up on hover over a todo item  */}
-            <Box className={classes.buttonRoot}>
-                <IconButton className={classes.delete} onClick={() => DeleteToDo()} >
-                    <DeleteForeverSharpIcon fontSize="small" />
-                </IconButton>
-            </Box>
-
-            <ListItemSecondaryAction>
-                {/* Show the edit button if the to do is not editable */}
+        <ThemeProvider theme={inputTheme}>
+            <ListItem dense className={classes.item}>
                 {!props.todo.editable ? (
-                    <IconButton style={{ marginRight: 5 }} edge="end" onClick={() => EditTitle(true)} >
-                        <EditSharpIcon />
-                    </IconButton>
-                ) : (
-                    <ThemeProvider theme={theme}>
-                        <IconButton color="primary" onClick={() => EditToDo()} >
-                            <CheckSharpIcon />
-                        </IconButton>
-                        <IconButton edge="end" color="secondary" onClick={() => EditTitle(false)} >
-                            <ClearSharpIcon />
-                        </IconButton>
-                    </ThemeProvider>
-                )}
-            </ListItemSecondaryAction>
+                    <ListItemIcon>
+                        <ThemeProvider theme={theme}>
+                            <Checkbox
+                                color="primary"
+                                edge="start"
+                                checked={props.todo.completed}
+                                id={"checkbox" + props.todo.id}
+                                tabIndex={-1}
+                                disableRipple
+                                onClick={handleToggle(props.todo.id)}
+                            />
+                        </ThemeProvider>
+                    </ListItemIcon>
+                ) : null}
 
-        </ListItem>
+                {/* Shows either the paragraph or the input depending on if it's editable */}
+                {!props.todo.editable ? (
+                    <ListItemText className={props.todo.completed ? classes.crossedOut : ""} id={labelId} primary={props.todo.title} />
+                ) : (
+                    <TextField color="primary" id={"input" + props.todo.id} label="Title" defaultValue={props.todo.title} size="small" />
+                )}
+
+                <ListItemSecondaryAction>
+
+                    {/* Show different buttons depending on if the to do is not editable */}
+                    {!props.todo.editable ? (
+                        <ThemeProvider theme={theme2}>
+                            {/* The edit button  */}
+                            <IconButton style={{ marginRight: 5 }} color="primary" edge="end" onClick={() => EditTitle(true)} >
+                                <EditSharpIcon />
+                            </IconButton>
+
+                            {/* The delete button  */}
+                            <IconButton className={classes.delete} color="secondary" onClick={() => DeleteToDo()} >
+                                <DeleteForeverSharpIcon fontSize="small" />
+                            </IconButton>
+                        </ThemeProvider>
+                    ) : (
+                        <ThemeProvider theme={theme}>
+                            {/* The confirm button  */}
+                            <IconButton color="primary" onClick={() => EditToDo()} >
+                                <CheckSharpIcon />
+                            </IconButton>
+
+                            {/* The cancel button  */}
+                            <IconButton edge="end" color="secondary" onClick={() => EditTitle(false)} >
+                                <ClearSharpIcon />
+                            </IconButton>
+                        </ThemeProvider>
+                    )}
+                </ListItemSecondaryAction>
+            </ListItem>
+        </ThemeProvider>
     );
 }
 
