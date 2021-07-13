@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles, withStyles, createTheme, ListItem, ListItemIcon, Checkbox, ListItemText, TextField, ListItemSecondaryAction, IconButton, ThemeProvider } from '@material-ui/core';
+import { makeStyles, withStyles, createTheme, ListItem, ListItemIcon, Checkbox, ListItemText, TextField, ListItemSecondaryAction, IconButton, ThemeProvider, Typography } from '@material-ui/core';
 import EditSharpIcon from '@material-ui/icons/EditSharp';
 import ClearSharpIcon from '@material-ui/icons/ClearSharp';
 import CheckSharpIcon from '@material-ui/icons/CheckSharp';
@@ -152,9 +152,9 @@ function ToDoItem(props) {
 
                 {/* Shows either the paragraph or the input depending on if it's editable */}
                 {!props.todo.editable ? (
-                    <ListItemText id={labelId} className={props.todo.completed ? classes.crossedOut : ""} multiline primary={props.todo.title} />
+                    <Typography id={labelId} variant="inherit" className={props.todo.completed ? classes.crossedOut : ""}>{props.todo.title}</Typography>
                 ) : (
-                    <TextField style={{ flex: '1 1 auto' }} color="primary" id={"input" + props.todo.id} label="Title" multiline defaultValue={props.todo.title} size="small" />
+                    <TextField style={{ flex: '1 1 auto' }} color="secondary" id={"input" + props.todo.id} label="Title" multiline defaultValue={props.todo.title} size="small" />
                 )}
 
                 <ListItemSecondaryAction>
