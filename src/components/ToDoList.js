@@ -5,7 +5,7 @@ import AddToDo from "./AddToDo";
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Paper, Typography, List, Button } from '@material-ui/core';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
     main: {
         width: '20rem',
         padding: '2em',
@@ -66,6 +66,7 @@ function ToDoList() {
     let monthIndex = newDate.getMonth();
     let year = newDate.getFullYear();
 
+    /* Returns the total amount of uncompleted items in the list */
     function GetNumberOfIncompleteItems() {
         var result = 0;
         for (var i = 0; i < toDo.length; i++) {
@@ -75,6 +76,7 @@ function ToDoList() {
         return result;
     }
 
+    /* Clears the to do list */
     function ClearList() {
         GlobalState.set({
             toDo: []

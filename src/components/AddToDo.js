@@ -41,7 +41,7 @@ function AddToDo(props) {
 
     const classes = useStyles();
 
-    // Add a to do item
+    /* Add a to do item */
     function AddToDo() {
         props.toDo.push(new ToDo(props.toDo.length, "New task...", false, false));
 
@@ -51,11 +51,11 @@ function AddToDo(props) {
         SaveChangesToLocalStorage();
     }
 
-
+    /* Saves an array in a localStorage item with the date and the actual list in it */
     function SaveChangesToLocalStorage() {
         var values = [];
         var oneday = new Date();
-        oneday.setHours(oneday.getHours() + 24);
+        oneday.setHours(oneday.getHours() + 1);
         values.push(JSON.stringify(props.toDo));
         values.push(oneday);
 

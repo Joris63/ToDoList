@@ -54,7 +54,7 @@ function ToDoItem(props) {
     const [checked, setChecked] = React.useState([0]);
 
 
-    // Edit the status of the to do item
+    /* Edit the status of the to do item */
     const handleToggle = (value) => () => {
         const currentIndex = checked.indexOf(value);
         const newChecked = [...checked];
@@ -70,7 +70,7 @@ function ToDoItem(props) {
         setChecked(newChecked);
     };
 
-    // Toggle the input to edit the title
+    /* Toggle the input to edit the title */
     function EditTitle(state) {
         props.toDo[findIndexOfItem()].MakeEditable(state);
 
@@ -80,7 +80,7 @@ function ToDoItem(props) {
         SaveChangesToLocalStorage();
     }
 
-    // Edit the title of the actual item
+    /* Edit the title of the actual item */
     function EditToDo() {
         props.toDo[findIndexOfItem()].ChangeTitle(document.getElementById("input" + props.todo.id).value);
 
@@ -91,7 +91,7 @@ function ToDoItem(props) {
         EditTitle(false);
     }
 
-    // Edit the status of the to do item
+    /* Edit the status of the to do item */
     function ChangeToDoStatus() {
         props.toDo[findIndexOfItem()].ChangeStatus(document.getElementById("checkbox" + props.todo.id).checked);
 
@@ -101,7 +101,7 @@ function ToDoItem(props) {
         SaveChangesToLocalStorage();
     }
 
-    // Delete the to do item
+    /* Delete the to do item */
     function DeleteToDo() {
         props.toDo.splice(findIndexOfItem(), 1);
 
@@ -111,6 +111,7 @@ function ToDoItem(props) {
         SaveChangesToLocalStorage();
     }
 
+    /* Finds the index of the item in the toDo list */
     function findIndexOfItem() {
         for (var i = props.toDo.length - 1; i >= 0; --i) {
             if (props.toDo[i].id === props.todo.id) {
@@ -119,10 +120,11 @@ function ToDoItem(props) {
         }
     }
 
+    /* Saves an array in a localStorage item with the date and the actual list in it */
     function SaveChangesToLocalStorage() {
         var values = [];
         var oneday = new Date();
-        oneday.setHours(oneday.getHours() + 24);
+        oneday.setHours(oneday.getHours() + 1);
         values.push(JSON.stringify(props.toDo));
         values.push(oneday);
 

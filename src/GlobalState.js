@@ -1,12 +1,15 @@
 import React from 'react';
 import ToDo from './models/ToDo'
 
+/* Gets a list from the localStorage if present */ 
 function getItemsFromLocalStorage() {
     if (localStorage.getItem("toDoList") != null) {
         const list = [];
         const localStorageItems = localStorage.getItem('toDoList').split(";");
 
-        console.log(localStorageItems[1] > new Date())
+        /* Check whether the item has expired the one hour mark  */
+        /*     If so return new list and clear localStorage      */
+        /*             If not return existing list               */
         if (localStorageItems[1] > Date()) {
             JSON.parse(localStorageItems[0]).map(item => list.push(new ToDo(list.length, item.title, item.editable, item.completed)));
         }
