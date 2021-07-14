@@ -7,7 +7,7 @@ import { Grid, Paper, Typography, List, Button } from '@material-ui/core';
 
 const useStyles = makeStyles(() => ({
     main: {
-        width: '25rem',
+        width: '22rem',
         padding: '2em',
     },
     title: {
